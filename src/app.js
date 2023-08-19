@@ -1,34 +1,58 @@
-import express from 'express'
-import fs from 'fs'
+import express from 'express';
+import mongoose from 'mongoose';
+import Grid from 'gridfs-stream';
+import { GridFsStorage } from 'multer-gridfs-storage';
+import multer from 'multer';
+import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
+import mongodb from 'mongodb'
+import path from 'path'
+import fs from 'fs';
+import * as url from 'url';
+    const dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const app = express()
+const app = express();
 
-app.get('/video', (req, res) => {
-    const range = req.headers.range ?? "0-";
-    if (!range) {
-        res.status(400).send('Requires range header');
-    }
-    const videoPath = "Waterfall.mp4";
-    const videoSize = fs.statSync("Waterfall.mp4").size;
+// Middleware
+app.use(bodyParser.json());
+app.use(methodOverride('_method'));
+app.set('view engine', 'ejs');
 
-    const CHUNK_SIZE = 10 ** 6; 
-    const start = Number(range.replace(/\D/g, ""));
-    const end = Math.min(start + CHUNK_SIZE, videoSize - 1);
+// Mongo URI
+const mongoURI = 'mongodb+srv://HolidayGuy:Madcows1@clusterbuster.qerfih6.mongodb.net/journal?retryWrites=true&w=majority';
 
-    const contentLength = end - start + 1;
-    const headers = {
-        "Content-Range": `bytes ${start}-${end}/${videoSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": contentLength,
-        "Content-Type": "video/mp4",
-    };
-    res.writeHead(206, headers);
+// Create mongo connection
+const conn = mongoose.createConnection(mongoURI);
 
-    const videoStream = fs.createReadStream(videoPath, {start, end})
+// Init gfs
+let gfs;
+conn.once('open', () => {
+  // Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
 
-    videoStream.pipe(res)
+// Create storage engine
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      const filename = file.originalname;
+      const fileInfo = {
+        filename: filename,
+        bucketName: 'uploads',
+      };
+      resolve(fileInfo);
+    });
+  },
+});
+
+const upload = multer({ storage });
+
+// Example endpoint for uploading a video file
+app.post('/upload', upload.single('video'), (req, res) => {
+  res.json({ message: 'File uploaded successfully' });
 });
 
 const port = 9000
 app.listen(port)
-

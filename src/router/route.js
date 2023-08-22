@@ -16,26 +16,7 @@ customRouter.route('/result')
     .post(controller.storeResult)
     .delete(controller.deleteResult)
 
-    const topicRouters = [
-        { topic: 'coding', path: '/coding' },
-        { topic: 'history', path: '/history' },
-        // Add more topics as needed
-    ];
-    
-    topicRouters.forEach(topicRouter => {
-        const topicRoute = topicRouter.path;
-        customRouter.route(`/questions${topicRoute}`)
-            .get((req, res) => {
-                // Handle topic-specific question fetching here
-            })
-            .post((req, res) => {
-                // Handle topic-specific question insertion here
-            })
-            .delete((req, res) => {
-                // Handle topic-specific question deletion here
-            });
-    });
-    
-
+customRouter.route('/questions/:topic')
+    .get(controller.getQuestionsByTopic);
 
 export default customRouter;

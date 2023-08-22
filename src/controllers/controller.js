@@ -4,14 +4,37 @@ import questions, { answers } from '/home/ben/projects/js/T3A2-B/src/database/da
 
 
 // get all questions
-export async function getQuestions(req, res){
+// export async function getQuestions(req, res){
+//     try {
+//         const q = await Questions.find()
+//         res.json(q)
+//     } catch (error) {
+//         res.json({error})
+//     }
+// }
+
+export async function getQuestions(req, res) {
     try {
-        const q = await Questions.find()
-        res.json(q)
+        const topic = req.params.topic; 
+        const query = topic ? { topic } : {}; 
+        const q = await Questions.find(query);
+        res.json(q);
     } catch (error) {
-        res.json({error})
+        res.json({ error });
     }
 }
+
+export async function getQuestionsByTopic(req, res) {
+    try {
+        const topic = req.params.topic;
+        const query = topic ? { topic } : {};
+        const q = await Questions.find(query);
+        res.json(q);
+    } catch (error) {
+        res.json({ error });
+    }
+}
+
 
 // insert all questions 
 export async function insertQuestions(req, res){

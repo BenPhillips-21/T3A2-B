@@ -1,17 +1,6 @@
 import Questions from "/home/ben/projects/js/T3A2-B/src/models/questionSchema.js";
 import Results from "/home/ben/projects/js/T3A2-B/src/models/resultSchema.js"
-import questions, { answers } from '/home/ben/projects/js/T3A2-B/src/database/data.js'
-
-
-// get all questions
-// export async function getQuestions(req, res){
-//     try {
-//         const q = await Questions.find()
-//         res.json(q)
-//     } catch (error) {
-//         res.json({error})
-//     }
-// }
+import questions from '/home/ben/projects/js/T3A2-B/src/database/data.js'
 
 export async function getQuestions(req, res) {
     try {
@@ -20,6 +9,7 @@ export async function getQuestions(req, res) {
         const q = await Questions.find(query);
         res.json(q);
     } catch (error) {
+        console.log(error)
         res.json({ error });
     }
 }
@@ -31,6 +21,7 @@ export async function getQuestionsByTopic(req, res) {
         const q = await Questions.find(query);
         res.json(q);
     } catch (error) {
+        console.log(error)
         res.json({ error });
     }
 }
@@ -39,9 +30,10 @@ export async function getQuestionsByTopic(req, res) {
 // insert all questions 
 export async function insertQuestions(req, res){
     try {
-        await Questions.insertMany({ questions, answers });
+        await Questions.insertMany( questions );
         res.json({ msg: "Data Saved Successfully...!" });
     } catch (error) {
+        console.error(error);
         res.json({ error });
     }
 }

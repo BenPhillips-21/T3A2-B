@@ -26,6 +26,27 @@ export async function getQuestionsByTopic(req, res) {
     }
 }
 
+export async function getQuestionsByTopicAndLevel(req, res) {
+    try {
+        const { topic, level } = req.params;
+        const query = {};
+
+        if (topic) {
+            query.topic = topic;
+        }
+
+        if (level) {
+            query.level = parseInt(level);
+        }
+
+        const questions = await Questions.find(query);
+        res.json(questions);
+    } catch (error) {
+        console.log(error);
+        res.json({ error });
+    }
+}
+
 
 // insert all questions 
 export async function insertQuestions(req, res){

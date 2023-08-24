@@ -5,6 +5,7 @@ dotenv.config()
 // question model
 const questionSchema = new mongoose.Schema({
     topic: {type: String, default: ''},
+    level: {type: Number, default: 1},
     question: { type: String, default: '' },
     options: { type: Array, default: [] },
     answer: { type: String, default: ''},

@@ -2,6 +2,7 @@ export default [
     {
         topic : 'coding',
         question : "Javascript is an _______ language",
+        level: 2,
         options : [
             'Object-Oriented',
             'Object-Based',
@@ -12,6 +13,7 @@ export default [
     {
         topic : 'coding',
         question : "Following methods can be used to display data in some form using Javascript",
+        level: 2,
         options : [
             'document.write()',
             'console.log()',
@@ -56,6 +58,7 @@ export default [
       
         topic : 'geography',
         question : "Which is the tallest mountain in the world?",
+        level: 2,
         options : [
             'Mt Everest',
             'Kilimanjaro',

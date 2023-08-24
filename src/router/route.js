@@ -19,4 +19,7 @@ customRouter.route('/result')
 customRouter.route('/questions/:topic')
     .get(controller.getQuestionsByTopic);
 
+customRouter.route('/questions/:topic/level/:level')
+    .get(controller.getQuestionsByTopicAndLevel);
+
 export default customRouter;

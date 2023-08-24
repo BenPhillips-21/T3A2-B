@@ -59,7 +59,7 @@ const port = process.env.PORT
 
 // // ROUTES
 
-app.use('/api', router)
+app.use('/', router)
 
 // // Example endpoint for uploading a video file
 // app.post('/upload', upload.single('video'), (req, res) => {

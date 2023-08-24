@@ -1,6 +1,6 @@
-import Questions from "/home/ben/projects/js/T3A2-B/src/models/questionSchema.js";
-import Results from "/home/ben/projects/js/T3A2-B/src/models/resultSchema.js"
-import questions from '/home/ben/projects/js/T3A2-B/src/database/data.js'
+import Questions from "../models/questionSchema.js";
+import Results from "../models/resultSchema.js"
+import questions from '../database/data.js'
 
 export async function getQuestions(req, res) {
     try {
@@ -30,15 +30,12 @@ export async function getQuestionsByTopicAndLevel(req, res) {
     try {
         const { topic, level } = req.params;
         const query = {};
-
         if (topic) {
             query.topic = topic;
         }
-
         if (level) {
             query.level = parseInt(level);
         }
-
         const questions = await Questions.find(query);
         res.json(questions);
     } catch (error) {

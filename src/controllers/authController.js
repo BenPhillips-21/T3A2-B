@@ -5,6 +5,16 @@ const usersDB = {
     setUsers: function (data) { this.users = data }
 }
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv/config'
+import fsPromises from 'fs/promises';
+import path from 'path'
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
 
 export async function handleLogin (req, res){
     const { user, pwd } = req.body;
@@ -15,7 +25,26 @@ export async function handleLogin (req, res){
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match) {
         // create JWTs
-        res.json({ 'success': `User ${user} is logged in!` });
+        const accessToken = jwt.sign(
+            { "username": foundUser.username },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '60s' }
+        )
+        const refreshToken = jwt.sign(
+            { "username": foundUser.username },
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: '1d' }
+        )
+        // saving refresh token with current user
+        const otherUsers = usersDB.users.filter(person => person.username !== foundUser.username)
+        const currentUser = {...foundUser, refreshToken}
+        usersDB.setUsers([...otherUsers, currentUser])
+        await fsPromises.writeFile(
+            path.join(__dirname, '..', 'models', 'users.json'),
+            JSON.stringify(usersDB.users)
+        )
+        res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
+        res.json({ accessToken });
     } else {
         res.sendStatus(401);
     }

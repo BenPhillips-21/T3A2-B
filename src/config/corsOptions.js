@@ -1,4 +1,4 @@
-const whitelist = [
+export const whitelist = [
     'https://www.yoursite.com',
     'http://localhost:9000'
 ];
@@ -14,4 +14,4 @@ const corsOptions = {
     optionsSuccessStatus: 200
 }
 
-module.exports = corsOptions;
+export default corsOptions

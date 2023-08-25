@@ -1,9 +1,12 @@
 import { Router } from 'express'; 
 const customRouter = Router(); 
+import verifyJWT from '../middleware/verifyJWT.js'
 
 import * as controller from '../controllers/controller.js'
 import * as authController from '../controllers/authController.js'
 import * as registerController from '../controllers/registerController.js'
+import handleRefreshLogin from '../controllers/refreshTokenController.js'
+import { handleLogout }  from '../controllers/logoutController.js';
 
 // Questions routes API
 
@@ -22,11 +25,17 @@ customRouter.route('/questions/:topic')
     .get(controller.getQuestionsByTopic);
 
 customRouter.route('/questions/:topic/level/:level')
-    .get(controller.getQuestionsByTopicAndLevel);
+    .get(verifyJWT, controller.getQuestionsByTopicAndLevel);
 
 // Authentication / Authorization
 customRouter.route('/login')
     .post(authController.handleLogin)
+
+customRouter.route('/logout')
+    .get(handleLogout)
+
+customRouter.route('/refresh')
+    .get(handleRefreshLogin);
 
 customRouter.route('/register')
     .post(registerController.handleNewUser)

@@ -9,6 +9,9 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import { config } from 'dotenv'
 import router from './router/route.js'
+import cookieParser from 'cookie-parser'
+import credentials from './middleware/credentials.js'
+import corsOptions from './config/corsOptions.js'
 import mongodb from 'mongodb'
 import path from 'path'
 import fs from 'fs';
@@ -21,12 +24,14 @@ import connect from './database/conn.js';
 const app = express();
 
 // Middleware
+app.use(credentials)
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(morgan('tiny'))
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json())
+app.use(cookieParser())
 config()
 
 // Port

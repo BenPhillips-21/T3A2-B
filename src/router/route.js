@@ -7,8 +7,8 @@ import verifyRoles from '../middleware/verifyRoles.js'
 import * as controller from '../controllers/controller.js'
 import * as authController from '../controllers/authController.js'
 import * as registerController from '../controllers/registerController.js'
-import handleRefreshLogin from '../controllers/refreshTokenController.js'
-import { handleLogout }  from '../controllers/logoutController.js';
+import * as refreshTokenController from '../controllers/refreshTokenController.js'
+import * as logoutController  from '../controllers/logoutController.js';
 
 // Questions routes API
 
@@ -32,14 +32,14 @@ customRouter.route('/questions/:topic/level/:level')
 customRouter.route('/login')
     .post(authController.handleLogin)
 
-customRouter.route('/logout')
-    .get(handleLogout)
-
 customRouter.route('/refresh')
-    .get(handleRefreshLogin);
+    .get(refreshTokenController.handleRefreshLogin);
 
 customRouter.route('/register')
     .post(registerController.handleNewUser)
+
+    customRouter.route('/logout')
+    .get(logoutController.handleLogout)
 
 
 

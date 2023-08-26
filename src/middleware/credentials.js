@@ -1,4 +1,4 @@
-import whitelist from '../config/corsOptions.js'
+import { whitelist } from '../config/corsOptions.js'
 
 const credentials = (req, res, next) => {
     const origin = req.headers.origin;

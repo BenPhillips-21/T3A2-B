@@ -1,6 +1,8 @@
 import { Router } from 'express'; 
 const customRouter = Router(); 
 import verifyJWT from '../middleware/verifyJWT.js'
+import ROLES_LIST from '../config/roles_list.js'
+import verifyRoles from '../middleware/verifyRoles.js'
 
 import * as controller from '../controllers/controller.js'
 import * as authController from '../controllers/authController.js'
@@ -10,16 +12,15 @@ import { handleLogout }  from '../controllers/logoutController.js';
 
 // Questions routes API
 
-
 customRouter.route('/questions')
     .get(controller.getQuestions)
-    .post(controller.insertQuestions)
-    .delete(controller.deleteQuestions)
+    .post(verifyJWT, verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), controller.insertQuestions)
+    .delete(verifyJWT, verifyRoles(ROLES_LIST.Admin), controller.deleteQuestions)
 
-customRouter.route('/result')
-    .get(controller.getResult)
-    .post(controller.storeResult)
-    .delete(controller.deleteResult)
+// customRouter.route('/result')
+//     .get(controller.getResult)
+//     .post(controller.storeResult)
+//     .delete(controller.deleteResult)
 
 customRouter.route('/questions/:topic')
     .get(controller.getQuestionsByTopic);

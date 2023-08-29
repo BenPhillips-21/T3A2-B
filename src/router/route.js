@@ -4,6 +4,8 @@ import verifyJWT from '../middleware/verifyJWT.js'
 import ROLES_LIST from '../config/roles_list.js'
 import verifyRoles from '../middleware/verifyRoles.js'
 
+import * as topicController from '../controllers/topicController.js'
+import * as videoController from '../controllers/videoController.js'
 import * as controller from '../controllers/controller.js'
 import * as authController from '../controllers/authController.js'
 import * as registerController from '../controllers/registerController.js'
@@ -14,13 +16,23 @@ import * as logoutController  from '../controllers/logoutController.js';
 
 customRouter.route('/questions')
     .get(controller.getQuestions)
-    .post(verifyJWT, verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor), controller.insertQuestions)
-    .delete(verifyJWT, verifyRoles(ROLES_LIST.Admin), controller.deleteQuestions)
+    .post(controller.insertQuestions)
+    .delete(controller.deleteQuestions)
 
 // customRouter.route('/result')
 //     .get(controller.getResult)
 //     .post(controller.storeResult)
 //     .delete(controller.deleteResult)
+
+customRouter.route('/videos')
+    .get(videoController.getVideos)
+    .post(videoController.insertVideos)
+    .delete(videoController.deleteVideos)
+
+customRouter.route('/topics')
+    .get(topicController.getTopics)
+    .post(topicController.insertTopics)
+    .delete(topicController.deleteTopics)
 
 customRouter.route('/questions/:topic')
     .get(controller.getQuestionsByTopic);

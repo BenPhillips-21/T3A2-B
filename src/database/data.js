@@ -7,6 +7,7 @@ const questions = [
             'Object-Oriented',
             'Object-Based',
             'Procedural',
+            'Object-Processing',
         ],
         answer: 'Object-Oriented'
     },
@@ -18,6 +19,7 @@ const questions = [
             'document.write()',
             'console.log()',
             'window.alert()',
+            'print()',
         ],
         answer: 'console.log()'
     },
@@ -29,6 +31,7 @@ const questions = [
             'Boolean',
             'Undefined',
             'Object',
+            'Int',
         ],
         answer: 'Object'
     },
@@ -39,7 +42,8 @@ const questions = [
         options: [
             'Return Object',
             'Return String',
-            'Return Integer'
+            'Return Integer',
+            'Return Number',
         ],
         answer: 'Return String'
     },
@@ -51,6 +55,7 @@ const questions = [
             'stringify()',
             'parse()',
             'convert()',
+            'serialize()',
         ],
         answer: 'stringify()'
     },
@@ -62,6 +67,7 @@ const questions = [
             'Mt Everest',
             'Kilimanjaro',
             'Mt kosciuszko',
+            'Mt Chungus',
         ],
         answer: 'Mt Everest'
     },
@@ -73,6 +79,7 @@ const questions = [
             'Amazon',
             'Nile',
             'Congo',
+            'Murray',
         ],
         answer: 'Nile'
     },
@@ -84,6 +91,7 @@ const questions = [
             '1804',
             '1810',
             '1815',
+            '1807',
         ],
         answer: '1804'
     },
@@ -95,6 +103,7 @@ const questions = [
             'Battle of Waterloo',
             'Battle of Austerlitz',
             'Battle of Borodino',
+            'Battle of Rivoli',
         ],
         answer: 'Battle of Waterloo'
     },
@@ -106,6 +115,7 @@ const questions = [
             'Paris, France',
             'Vienna, Austria',
             'Ajaccio, Corsica',
+            'Milan, Italy',
         ],
         answer: 'Ajaccio, Corsica'
     },
@@ -117,6 +127,7 @@ const questions = [
             'Crimean War',
             'Napoleonic Wars',
             'War of the Fifth Coalition',
+            'The Peninsula War',
         ],
         answer: 'Napoleonic Wars'
     },
@@ -128,6 +139,7 @@ const questions = [
             'Napoleonic Code',
             'French Legal System',
             'Civil Law Framework',
+            'Napoleonic Law',
         ],
         answer: 'Napoleonic Code'
     },

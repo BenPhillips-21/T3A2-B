@@ -35,6 +35,10 @@ customRouter.route('/topics')
     .post(topicController.insertTopics)
     .delete(topicController.deleteTopics)
 
+// GET route that gets topic by topic name
+customRouter.route('/topics/:topicName')
+    .get(topicController.getTopicByName)
+
 customRouter.route('/questions/:topic')
     .get(controller.getQuestionsByTopic);
 

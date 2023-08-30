@@ -25,6 +25,25 @@ export async function getTopics(req, res) {
     }
 }
 
+export async function getTopicByName(req, res) {
+    const topicName = req.params.topicName
+
+    try {
+        const topic = await TopicModel.findOne({ topicName })
+            .populate('questions')
+            .populate('videos');
+
+        if (!topic) {
+            return res.status(404).json({ message: 'Topic not found' });
+        }
+
+        res.json(topic);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
 export async function deleteTopics(req, res) {
     try {
         await TopicModel.deleteMany()

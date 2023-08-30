@@ -27,7 +27,7 @@ export async function getTopics(req, res) {
 
 export async function deleteTopics(req, res) {
     try {
-        await Topics.deleteMany()
+        await TopicModel.deleteMany()
         res.json({msg: "Topics deleted successfully"})
     } catch (error) {
         res.json({error})

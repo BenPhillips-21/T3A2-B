@@ -7,13 +7,32 @@ const userSchema = new mongoose.Schema ({
         type: String,
         required: true
     },
+    userStats: {
+        codingLevel: {
+            type: Number,
+            required: true,
+            default: 1
+        },
+        geographyLevel: {
+            type: Number,
+            required: true,
+            default: 1
+        },
+        napoleonLevel: {
+            type: Number,
+            required: true,
+            default: 1
+        } 
+    },
     roles: {
         User: {
             type: Number,
             default: 7777
         },
-        Editor: Number,
-        Admin: Number
+        Admin: {
+            type: Number,
+            default: 2121
+        }
     },
     password: {
         type: String,

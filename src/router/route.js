@@ -4,6 +4,7 @@ import verifyJWT from '../middleware/verifyJWT.js'
 import ROLES_LIST from '../config/roles_list.js'
 import verifyRoles from '../middleware/verifyRoles.js'
 
+import * as levelController from '../controllers/levelController.js'
 import * as topicController from '../controllers/topicController.js'
 import * as videoController from '../controllers/videoController.js'
 import * as controller from '../controllers/controller.js'
@@ -53,6 +54,9 @@ customRouter.route('/register')
     customRouter.route('/logout')
     .get(logoutController.handleLogout)
 
+
+customRouter.route('/levelup/:username/:topic')
+    .put(levelController.levelUp)
 
 
 export default customRouter;

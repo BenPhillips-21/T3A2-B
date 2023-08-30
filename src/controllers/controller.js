@@ -1,5 +1,5 @@
 import Questions from "../models/questionSchema.js";
-import Results from "../models/resultSchema.js"
+// import Results from "../models/resultSchema.js"
 import questions from '../database/data.js'
 
 export async function getQuestions(req, res) {
@@ -66,39 +66,39 @@ export async function deleteQuestions(req, res) {
     }
 }
 
-// get results
+// // get results
 
-export async function getResult(req, res) {
-    try {
-        const r = await Results.find()
-        res.json(r)
-    } catch (error) {
-        res.json({error})
-    }
-}
+// export async function getResult(req, res) {
+//     try {
+//         const r = await Results.find()
+//         res.json(r)
+//     } catch (error) {
+//         res.json({error})
+//     }
+// }
 
-// post results
-export async function storeResult(req, res) {
-    try {
-        const { username, result, attempts, points, achieved } = req.body;
-        if (!username || !result) {
-            throw new Error('Data Not Provided...!');
-        }
+// // post results
+// export async function storeResult(req, res) {
+//     try {
+//         const { username, result, attempts, points, achieved } = req.body;
+//         if (!username || !result) {
+//             throw new Error('Data Not Provided...!');
+//         }
 
-        const createdResult = await Results.create({ username, result, attempts, points, achieved });
-        res.json({ msg: "Result Saved Successfully...!", data: createdResult });
+//         const createdResult = await Results.create({ username, result, attempts, points, achieved });
+//         res.json({ msg: "Result Saved Successfully...!", data: createdResult });
 
-    } catch (error) {
-        res.json({ error: error.message });
-    }
-}
+//     } catch (error) {
+//         res.json({ error: error.message });
+//     }
+// }
 
-// delete results
-export async function deleteResult(req, res) {
-    try {
-        await Results.deleteMany()
-        res.json({ msg: "Result deleted successfully"})
-    } catch (error) {
-        res.json({ error })
-    }
-}
+// // delete results
+// export async function deleteResult(req, res) {
+//     try {
+//         await Results.deleteMany()
+//         res.json({ msg: "Result deleted successfully"})
+//     } catch (error) {
+//         res.json({ error })
+//     }
+// }

@@ -1,5 +1,4 @@
 import TopicModel from "../models/topicSchema.js";
-import topics from '../database/topicData.js'
 
 export async function insertTopics(req, res) {
     try {
@@ -11,7 +10,6 @@ export async function insertTopics(req, res) {
         res.json({ error });
     }
 }
-
 
 export async function getTopics(req, res) {
     try {
@@ -52,3 +50,24 @@ export async function deleteTopics(req, res) {
         res.json({error})
     }
 }
+
+export async function updateTopic(req, res) {
+    const topicId = req.params.id
+    const updateData = req.body
+
+    try {
+        const updatedTopic = await TopicModel.findByIdAndUpdate(topicId, updateData, { new: true })
+            .populate('questions')
+            .populate('videos')
+
+        if (!updatedTopic) {
+            return res.status(404).json({ msg: "Topic not found" })
+        }
+
+        res.json({ msg: "Topic updated successfully", updatedTopic })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error })
+    }
+}
+

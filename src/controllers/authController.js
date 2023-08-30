@@ -2,8 +2,6 @@ import userModel from '../models/userSchema.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-
-
 export async function handleLogin (req, res){
     const { user, pwd } = req.body;
     if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
@@ -21,7 +19,7 @@ export async function handleLogin (req, res){
                 "roles": roles }
              },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '60s' }
+            { expiresIn: '15m' }
         )
         const refreshToken = jwt.sign(
             { "username": foundUser.username },

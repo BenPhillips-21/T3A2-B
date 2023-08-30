@@ -1,4 +1,3 @@
-import usersData from '../models/users.json' assert { type: "json" };
 import userModel from '../models/userSchema.js'
 
 

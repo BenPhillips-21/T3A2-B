@@ -1,6 +1,4 @@
 import Questions from "../models/questionSchema.js";
-// import Results from "../models/resultSchema.js"
-import questions from '../database/data.js'
 
 export async function getQuestions(req, res) {
     try {
@@ -11,6 +9,24 @@ export async function getQuestions(req, res) {
     } catch (error) {
         console.log(error)
         res.json({ error });
+    }
+}
+
+export async function updateQuestion(req, res) {
+    const questionId = req.params.id
+    const updateData = req.body
+
+    try {
+        const updatedQuestion = await Questions.findByIdAndUpdate(questionId, updateData, { new: true })
+
+        if (!updatedQuestion) {
+            return res.status(404).json({ msg: "Question not found" })
+        }
+
+        res.json({ msg: "Question updated successfully", updatedQuestion })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error })
     }
 }
 

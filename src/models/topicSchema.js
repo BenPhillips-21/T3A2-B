@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import questionSchema from './questionSchema.js'
-import videoSchema from './videoSchema.js'
 dotenv.config()
 
 // topic model

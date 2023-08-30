@@ -1,9 +1,10 @@
 import Videos from "../models/videoSchema.js";
-import videos from '../database/videoData.js'
 
 export async function insertVideos(req, res){
+    const videoData = req.body
+
     try {
-        await Videos.insertMany( videos );
+        await Videos.insertMany( videoData );
         res.json({ msg: "Video data Saved Successfully...!" });
     } catch (error) {
         console.error(error);
@@ -18,6 +19,24 @@ export async function getVideos(req, res) {
     } catch (error) {
         console.log(error)
         res.json({ error })
+    }
+}
+
+export async function updateVideo(req, res) {
+    const videoId = req.params.id
+    const updateData = req.body
+
+    try {
+        const updatedVideo = await Videos.findByIdAndUpdate(videoId, updateData, { new: true });
+
+        if (!updatedVideo) {
+            return res.status(404).json({ msg: "Video not found" });
+        }
+
+        res.json({ msg: "Video updated successfully", updatedVideo });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error });
     }
 }
 

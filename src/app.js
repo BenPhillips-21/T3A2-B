@@ -15,9 +15,9 @@ import connect from './database/conn.js';
 const app = express();
 
 // Middleware
-app.use(credentials)
+// app.use(credentials)
 app.use(bodyParser.json());
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 config()

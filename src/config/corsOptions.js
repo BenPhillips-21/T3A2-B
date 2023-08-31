@@ -1,5 +1,5 @@
 export const whitelist = [
-    'https://www.yoursite.com',
+    'https://scrolled-api.onrender.com',
     'http://localhost:9000'
 ];
 

@@ -14,6 +14,7 @@ import connect from './database/conn.js';
 
 const app = express();
 
+app.use(cors())
 // Middleware
 // app.use(credentials)
 app.use(bodyParser.json());

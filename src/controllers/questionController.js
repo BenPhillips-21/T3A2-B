@@ -62,15 +62,23 @@ export async function getQuestionsByTopicAndLevel(req, res) {
 
 
 // insert all questions 
-export async function insertQuestions(req, res){
+export async function insertQuestions(req, res) {
     try {
-        await Questions.insertMany( questions );
+        const questionData = req.body;
+
+        if (!questionData || !questionData.topic || !questionData.level || !questionData.question || !questionData.options || !questionData.answer) {
+            return res.status(400).json({ error: "Invalid request body. Make sure all required fields are provided." });
+        }
+
+        await Questions.create(questionData);
         res.json({ msg: "Data Saved Successfully...!" });
     } catch (error) {
         console.error(error);
-        res.json({ error });
+        res.status(500).json({ error: "An error occurred while saving data." });
     }
 }
+
+
 
 // delete all questions
 export async function deleteQuestions(req, res) {

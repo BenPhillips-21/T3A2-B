@@ -58,6 +58,9 @@ customRouter.route('/levelup/:username/:topic')
 customRouter.route('/login')
     .post(authController.handleLogin)
 
+customRouter.route('/user/:username')
+    .get(authController.getSpecificUser)
+
 customRouter.route('/refresh')
     .get(refreshTokenController.handleRefreshLogin);
 

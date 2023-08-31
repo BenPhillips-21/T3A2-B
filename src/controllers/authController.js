@@ -38,3 +38,20 @@ export async function handleLogin (req, res){
     }
 }
 
+export async function getSpecificUser(req, res) {
+    const { username } = req.params;
+
+    try {
+        const user = await userModel.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "An error occurred while fetching user data." });
+    }
+}
+

@@ -4,8 +4,6 @@ import bodyParser from 'body-parser';
 import { config } from 'dotenv'
 import router from './router/route.js'
 import cookieParser from 'cookie-parser'
-import credentials from './middleware/credentials.js'
-import corsOptions from './config/corsOptions.js'
 import * as url from 'url';
     const dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
@@ -14,11 +12,10 @@ import connect from './database/conn.js';
 
 const app = express();
 
-app.use(cors())
+
 // Middleware
-// app.use(credentials)
+app.use(cors())
 app.use(bodyParser.json());
-// app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 config()

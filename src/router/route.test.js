@@ -107,6 +107,8 @@ describe('POST /register', () => {
     test('Returns updated video and success msg', async () => {
         const putData = {"topic": "Geography", "level": 1, "link": "https://www.youtube.com/embed/dQw4w9WgXcQ", "videoTitle": "Geography is Awesome!!"}
     
+        const res = await request(app)
+
         .put('/videos/64f6d09b23ccf981e873d0f2')
         .send(putData)
         .expect(200)

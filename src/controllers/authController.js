@@ -25,7 +25,7 @@ export async function handleLogin(req, res) {
             { expiresIn: '15m' }
         );
 
-        res.json({ accessToken });
+        res.json({ accessToken, foundUser });
     } else {
         res.sendStatus(401);
     }

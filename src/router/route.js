@@ -53,7 +53,7 @@ customRouter.route('/topics/:topicName/:topicLevel')
     .get(topicController.getTopicByNameAndLevel)
 
 // "Level Up" route
-customRouter.route('/levelup/:username/:topic')
+customRouter.route('/levelup/:username')
     .put(levelController.levelUp)
 
 // Authentication / Authorization

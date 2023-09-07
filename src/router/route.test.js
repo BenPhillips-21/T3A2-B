@@ -1,9 +1,25 @@
 import app from '../app.js'
 import request from 'supertest'
+import jwt from 'jsonwebtoken'
+
+const secretKey = process.env.ACCESS_TOKEN_SECRET
+        const username = 'testuser'
+
+        const token = jwt.sign(
+            {
+              UserInfo: {
+                username,
+                roles: [7777, 2121], 
+              },
+            },
+            secretKey,
+            { expiresIn: '10m' } 
+          )
 
 describe('Topic Route test', () => {
     test('GET /topics', async () => {
         const res = await request(app).get('/topics')
+        .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
         expect(res.header['content-type']).toMatch('json')
         expect(res.body).toBeDefined()
@@ -13,6 +29,7 @@ describe('Topic Route test', () => {
 describe('Get topic by topic and level route test', () => {
     test('GET /topics/Coding/2', async () => {
         const res = await request(app).get('/topics/Coding/2')
+        .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
         expect(res.header['content-type']).toMatch('json')
         expect(res.body.topicLevel).toBe(2)
@@ -24,6 +41,7 @@ describe('Get topic by topic and level route test', () => {
 describe('Get user Ronald route', () => {
     test('GET /user/Ronald', async () => {
         const res = await request(app).get('/user/Ronald')
+        .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
         expect(res.header['content-type']).toMatch('json')
         expect(res.body.roles.User).toBe(7777)
@@ -35,6 +53,7 @@ describe('Get user Ronald route', () => {
 describe('Videos route test', () => {
     test('GET /videos', async () => {
         const res = await request(app).get('/videos')
+        .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
         expect(res.header['content-type']).toMatch('json')
         expect(res.body).toBeDefined()
@@ -44,6 +63,7 @@ describe('Videos route test', () => {
 describe('Questions route test', () => {
     test('GET /questions', async () => {
         const res = await request(app).get('/questions')
+        .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
         expect(res.header['content-type']).toMatch('json')
         expect(res.body).toBeDefined()
@@ -77,42 +97,60 @@ describe('POST /register', () => {
 
   describe('POST /questions', () => {
     test('Data should save successfully', async () => {
-     const postData = {topic: 'testTopic', level: 3, question: 'testQuestion?', options: ["testAnswer", "testytest", "testicle", "testerino"], answer: "testAnswer"}
-
-     const res = await request(app)
-     .post('/questions')
-     .send(postData)
-     .expect(200)
-
-     expect(res.body.msg).toBe("Data Saved Successfully...!")
-    })
-  })
-
+      const postData = {
+        topic: 'testTopic',
+        level: 3,
+        question: 'testQuestion?',
+        options: ["testAnswer", "testytest", "testicle", "testerino"],
+        answer: "testAnswer"
+      };
+  
+      const res = await request(app)
+        .post('/questions')
+        .set('Authorization', `Bearer ${token}`) 
+        .send(postData)
+        .expect(200);
+  
+      expect(res.body.msg).toBe("Data Saved Successfully...!");
+    });
+  });
+  
   describe('PUT /levelup/:username', () => {
     test('Returns updated levels successfully', async () => {
-        const putData = {"codingLevel": 2, "geographyLevel": 3, "napoleonLevel": 9}
-
-        const res = await request(app)
+      const putData = {
+        "codingLevel": 2,
+        "geographyLevel": 3,
+        "napoleonLevel": 9
+      };
+  
+      const res = await request(app)
         .put('/levelup/testUser')
+        .set('Authorization', `Bearer ${token}`) 
         .send(putData)
-        .expect(200)
-
-        expect(res.body.userStats.codingLevel).toBe(2)
-        expect(res.body.userStats.geographyLevel).toBe(3)
-        expect(res.body.userStats.napoleonLevel).toBe(9)
-    })
-  })
-
+        .expect(200);
+  
+      expect(res.body.userStats.codingLevel).toBe(2);
+      expect(res.body.userStats.geographyLevel).toBe(3);
+      expect(res.body.userStats.napoleonLevel).toBe(9);
+    });
+  });
+  
   describe('PUT /videos/:id', () => {
     test('Returns updated video and success msg', async () => {
-        const putData = {"topic": "Geography", "level": 1, "link": "https://www.youtube.com/embed/dQw4w9WgXcQ", "videoTitle": "Geography is Awesome!!"}
-    
-        const res = await request(app)
-
+      const putData = {
+        "topic": "Geography",
+        "level": 1,
+        "link": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "videoTitle": "Geography is Awesome!!"
+      };
+  
+      const res = await request(app)
         .put('/videos/64f6d09b23ccf981e873d0f2')
+        .set('Authorization', `Bearer ${token}`) 
         .send(putData)
-        .expect(200)
-
-        expect(res.body.msg).toBe('Video updated successfully')
-    })
-  })
+        .expect(200);
+  
+      expect(res.body.msg).toBe('Video updated successfully');
+    });
+  });
+  

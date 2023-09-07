@@ -15,42 +15,42 @@ import * as logoutController  from '../controllers/logoutController.js'
 
 // Question routes
 customRouter.route('/questions')
-    .get(questionController.getQuestions)
-    .post(questionController.insertQuestions)
-    .delete(questionController.deleteQuestions)
+    .get(verifyJWT, questionController.getQuestions)
+    .post(verifyJWT, verifyRoles(ROLES_LIST.Admin), questionController.insertQuestions)
+    .delete(verifyJWT, verifyRoles(ROLES_LIST.Admin), questionController.deleteQuestions)
 
 customRouter.route('/questions/:id')
-    .put(questionController.updateQuestion)
+    .put(verifyJWT, verifyRoles(ROLES_LIST.Admin), questionController.updateQuestion)
 
 customRouter.route('/questions/:topic')
-    .get(questionController.getQuestionsByTopic)
+    .get(verifyJWT, questionController.getQuestionsByTopic)
 
 customRouter.route('/questions/:topic/level/:level')
-    .get(questionController.getQuestionsByTopicAndLevel)
+    .get(verifyJWT, questionController.getQuestionsByTopicAndLevel)
 
 // Video Routes
 customRouter.route('/videos')
-    .get(videoController.getVideos)
-    .post(videoController.insertVideos)
-    .delete(videoController.deleteVideos)
+    .get(verifyJWT, videoController.getVideos)
+    .post(verifyJWT, verifyRoles(ROLES_LIST.Admin), videoController.insertVideos)
+    .delete(verifyJWT, verifyRoles(ROLES_LIST.Admin), videoController.deleteVideos)
     
 customRouter.route('/videos/:id')
-    .put(videoController.updateVideo)
+    .put(verifyJWT, verifyRoles(ROLES_LIST.Admin), videoController.updateVideo)
 
 // Topic Routes
 customRouter.route('/topics')
-    .get(topicController.getTopics)
-    .post(topicController.insertTopics)
-    .delete(topicController.deleteTopics)
+    .get(verifyJWT, topicController.getTopics)
+    .post(verifyJWT, verifyRoles(ROLES_LIST.Admin), topicController.insertTopics)
+    .delete(verifyJWT, verifyRoles(ROLES_LIST.Admin), topicController.deleteTopics)
 
 customRouter.route('/topics/:id')
-    .put(topicController.updateTopic)
+    .put(verifyJWT, verifyRoles(ROLES_LIST.Admin), topicController.updateTopic)
 
 customRouter.route('/topics/:topicName')
-    .get(topicController.getTopicByName)
+    .get(verifyJWT, topicController.getTopicByName)
 
 customRouter.route('/topics/:topicName/:topicLevel')
-    .get(topicController.getTopicByNameAndLevel)
+    .get(verifyJWT, topicController.getTopicByNameAndLevel)
 
 // "Level Up" route
 customRouter.route('/levelup/:username')

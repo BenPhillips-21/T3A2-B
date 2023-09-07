@@ -2,8 +2,9 @@ import app from '../app.js'
 import request from 'supertest'
 import jwt from 'jsonwebtoken'
 
+// Define the JWT token for testing
 const secretKey = process.env.ACCESS_TOKEN_SECRET
-        const username = 'testuser'
+const username = 'testuser'
 
         const token = jwt.sign(
             {

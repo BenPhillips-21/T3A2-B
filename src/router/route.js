@@ -50,7 +50,7 @@ customRouter.route('/topics/:topicName')
     .get(verifyJWT, topicController.getTopicByName)
 
 customRouter.route('/topics/:topicName/:topicLevel')
-    .get(verifyJWT, topicController.getTopicByNameAndLevel)
+    .get(topicController.getTopicByNameAndLevel)
 
 // "Level Up" route
 customRouter.route('/levelup/:username')
